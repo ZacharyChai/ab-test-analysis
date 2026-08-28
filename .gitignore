@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.pytest_cache/
+.ipynb_checkpoints/
+
+# data/raw/*.csv and data/processed/results.json ARE committed on purpose:
+# a clean clone runs offline and the frozen results back the regression test.
