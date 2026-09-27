@@ -10,8 +10,8 @@ novelty/primacy check, segment reversals, and a guardrail.
 **Recommendation: do not ship the new page.** Conversion was 12.04% (control) vs
 11.88% (treatment) — an absolute lift of **−0.16 pp** (95% CI −0.39 to +0.08),
 z = −1.31, **p = 0.19**. No evidence the new page helps, the point estimate is
-slightly negative, and the test had the traffic to detect a lift roughly
-one-quarter the size of what the team said it would care about. Keep the old page.
+slightly negative, and the test had the traffic to detect a lift of 0.34 pp,
+a little over half the 0.6 pp the team said it would care about. Keep the old page.
 
 ## Findings at a glance
 
@@ -105,12 +105,3 @@ analysis/charts/      generated figures
 - **No CUPED / regression adjustment.** The dataset carries no pre-period
   covariate to reduce variance with, so the estimator is the plain difference in
   proportions.
-
----
-
-*Résumé line:* Analysed a 295k-user landing-page A/B test end to end — sample-
-ratio-mismatch gate, power/MDE calculation, two-proportion test with effect-size
-CI, novelty/primacy and segment-reversal checks, and a guardrail metric —
-concluding with a well-powered null (−0.16 pp, p = 0.19) and a recommendation
-not to ship. Statistics packaged as tested functions with a frozen-value
-regression test.
