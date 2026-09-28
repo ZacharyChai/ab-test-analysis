@@ -52,7 +52,7 @@ def chart_srm(srm: ex.SRMResult, path: Path) -> None:
     ax.set_xticks(x)
     ax.set_xticklabels(arms)
     ax.set_ylabel("sessions")
-    ax.set_title(f"Sample ratio mismatch check — p = {srm.p_value:.3f}")
+    ax.set_title(f"Sample ratio mismatch check (p = {srm.p_value:.3f})")
     ax.legend()
     for xi, o in zip(x, obs):
         ax.text(xi - 0.19, o, f"{o:,}", ha="center", va="bottom", fontsize=8)
@@ -119,7 +119,7 @@ def chart_primary(t: ex.ProportionTest, path: Path) -> None:
     ax2.axvline(0, color=C_WARN, lw=1)
     ax2.set_yticks([])
     ax2.set_xlabel("absolute lift, treatment − control (pp)")
-    ax2.set_title(f"Effect size — p = {t.p_value:.3f}")
+    ax2.set_title(f"Effect size (p = {t.p_value:.3f})")
     ax2.text(t.abs_lift * 100, 0.15,
              f"{t.abs_lift*100:+.2f} pp\n[{lo*100:+.2f}, {hi*100:+.2f}]",
              ha="center", fontsize=9)
@@ -137,11 +137,11 @@ def chart_novelty(daily: "pd.DataFrame", path: Path) -> None:
     ax.plot(daily["date"], daily["cum_lift"] * 100, lw=2.2,
             color=C_TREAT, label="cumulative lift")
     ax.set_ylabel("lift, treatment − control (pp)")
-    ax.set_title("Novelty / primacy check — treatment effect over the test window")
+    ax.set_title("Novelty / primacy check: treatment effect over the test window")
     ax.legend()
     fig.autofmt_xdate()
     fig.text(0.5, -0.02,
-             "Cumulative lift settles near −0.16 pp within a few days and stays flat — "
+             "Cumulative lift settles near −0.16 pp within a few days and stays flat: "
              "no decay, no ramp.",
              ha="center", fontsize=8, style="italic")
     fig.tight_layout()
@@ -171,7 +171,7 @@ def chart_segments(seg_country: "pd.DataFrame", seg_weekday: "pd.DataFrame",
     ax.set_yticks(ys)
     ax.set_yticklabels([r[0] for r in rows])
     ax.set_xlabel("absolute lift, treatment − control (pp)")
-    ax.set_title("Segment cuts — does any slice reverse the aggregate?")
+    ax.set_title("Segment cuts: does any slice reverse the aggregate?")
     ax.legend(loc="lower right")
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
@@ -196,7 +196,7 @@ def main() -> None:
     print(srm.summary())
     chart_srm(srm, CHARTS / "01_srm_check.png")
     if srm.is_mismatch:
-        raise SystemExit("SRM detected — stopping before outcome analysis.")
+        raise SystemExit("SRM detected; stopping before outcome analysis.")
 
     n_per_arm = int(clean["group"].value_counts().min())
 

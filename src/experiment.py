@@ -2,7 +2,7 @@
 
 Everything the notebook and the tests rely on lives here as plain functions, so
 the same code that produces the memo is the code under test. Nothing in this
-module reads global state or plots — callers pass data in and get numbers back.
+module reads global state or plots: callers pass data in and get numbers back.
 
 Pipeline order is deliberate and matches `analysis/ab_test_analysis.ipynb`:
 
@@ -99,7 +99,7 @@ def clean_experiment(df: pd.DataFrame) -> tuple[pd.DataFrame, CleaningReport]:
 
 
 # --------------------------------------------------------------------------- #
-# Step 1 — Sample Ratio Mismatch (run before looking at conversion)
+# Step 1: Sample Ratio Mismatch (run before looking at conversion)
 # --------------------------------------------------------------------------- #
 @dataclass
 class SRMResult:
@@ -115,8 +115,8 @@ class SRMResult:
         return self.p_value < 0.01
 
     def summary(self) -> str:
-        verdict = "SRM DETECTED — do not trust downstream results" if self.is_mismatch \
-            else "no SRM — split is consistent with the intended ratio"
+        verdict = "SRM DETECTED: do not trust downstream results" if self.is_mismatch \
+            else "no SRM: split is consistent with the intended ratio"
         return (f"chi2={self.chi2:.3f}, p={self.p_value:.4f}  ->  {verdict}")
 
 
@@ -142,7 +142,7 @@ def srm_check(group_counts: pd.Series | dict,
 
 
 # --------------------------------------------------------------------------- #
-# Step 2 — Power / sample size ("what we should have specified going in")
+# Step 2: Power / sample size ("what we should have specified going in")
 # --------------------------------------------------------------------------- #
 def required_sample_size(baseline_rate: float,
                          mde_absolute: float,
@@ -188,7 +188,7 @@ def mde_for_sample_size(baseline_rate: float,
 
 
 # --------------------------------------------------------------------------- #
-# Step 3 — Primary test + effect size with CI
+# Step 3: Primary test + effect size with CI
 # --------------------------------------------------------------------------- #
 @dataclass
 class ProportionTest:
@@ -264,7 +264,7 @@ def wilson_ci(successes: int, n: int, alpha: float = 0.05) -> tuple[float, float
 
 
 # --------------------------------------------------------------------------- #
-# Step 4 — Novelty / primacy: treatment effect over time
+# Step 4: Novelty / primacy (treatment effect over time)
 # --------------------------------------------------------------------------- #
 def daily_effect(df: pd.DataFrame) -> pd.DataFrame:
     """Per-day conversion by arm, the daily lift, and the cumulative lift.
@@ -295,7 +295,7 @@ def daily_effect(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # --------------------------------------------------------------------------- #
-# Step 5 — Segment cuts (Simpson's-paradox live check)
+# Step 5: Segment cuts (Simpson's-paradox live check)
 # --------------------------------------------------------------------------- #
 def segment_effects(df: pd.DataFrame, by: str) -> pd.DataFrame:
     """Run the primary test within each level of `by` (country, weekday, ...).
@@ -334,7 +334,7 @@ def add_weekday(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # --------------------------------------------------------------------------- #
-# Step 6 — Guardrail metric
+# Step 6: Guardrail metric
 # --------------------------------------------------------------------------- #
 @dataclass
 class GuardrailResult:

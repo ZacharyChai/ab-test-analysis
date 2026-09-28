@@ -5,7 +5,7 @@ the analysis is reproducible even if the mirror below goes away. This script
 exists to document provenance and to let `make fetch` refresh the files.
 
 Dataset: the widely-used Udacity "Analyze A/B Test Results" landing-page
-experiment — 294,478 page views (2017-01-02 to 2017-01-24), each row a user
+experiment: 294,478 page views (2017-01-02 to 2017-01-24), each row a user
 randomly assigned to the old or new page with a binary `converted` outcome,
 plus a per-user country lookup.
 
@@ -28,7 +28,7 @@ FILES = {
     "countries.csv": f"{BASE}/countries.csv",
 }
 
-# sha256 of the files as committed — a fetch that doesn't match these is a
+# sha256 of the files as committed: a fetch that doesn't match these is a
 # signal the upstream mirror changed and the analysis should be re-checked.
 EXPECTED_SHA256 = {
     "ab_data.csv": "d56e2accec25e99ac21cb3d76c5df516dd19cc7a77c14c9014f94e1ea1301beb",
@@ -52,7 +52,7 @@ def main() -> int:
         print(f"  {dest.stat().st_size:,} bytes  sha256={digest}")
         expected = EXPECTED_SHA256.get(name)
         if expected and digest != expected:
-            print(f"  WARNING: sha256 mismatch (expected {expected}) — "
+            print(f"  WARNING: sha256 mismatch (expected {expected}): "
                   f"upstream mirror may have changed; re-verify the analysis.")
     print("done")
     return 0
